@@ -1,0 +1,12 @@
+My name is Nick McLeod, 27 years old.
+
+I am working towards a CIS degree in Info Sys: computer programming with C++. I don’t] have much experience yet outside of the Linux/Unix Intro, C++ and PHP classes required for the degree. I have started looking through LinkedIn’s courses to learn a bit more broadly. C++ would easily be my most studied subject.
+
+I currently work for both Hungry Howie’s ands Jets’ delivering pizzas in Ypsilanti and Ann Arbor respectively. I live a short way out of downtown Ypsilanti with two house mates and my tuxedo cat, Roswell.
+
+I originally pursued a teaching degree, then took a hiatus, and came back after being urged to try the nursing program. I decided I lacked the temperament to deal with most of any bodily fluids, and then took the Intro to Unix/Linux class, and the C++ class, and loved it.
+
+Looking forward to learning about making real software as a team, instead of machine problem assignments.
+
+
+
