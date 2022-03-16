@@ -1,6 +1,9 @@
 # create database
 create database BrawndoBros;
 
+#use database
+use BrawndoBros;
+
 # create each table
 create table Users (
 	userId int,
