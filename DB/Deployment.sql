@@ -1,5 +1,5 @@
 # create database
-create database BrawndoBros;
+create database if not exists BrawndoBros;
 
 #use database
 use BrawndoBros;
@@ -9,7 +9,7 @@ create table Users (
 	userId int,
 	email varchar(255),
 	password varchar(255),
-	lastLogin varchar(255),
+	lastLogin varchar(255)
 );
 
 create table Plants (
