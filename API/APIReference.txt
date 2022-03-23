@@ -1,0 +1,26 @@
+/api/plants
+get - list all plant id and nickname
+post - adds plant
+
+/api/plants/:id
+get - list plant information
+put - update plant information
+delete - delete plant
+
+/api/plantEvents/:id
+get - list all plant events for plant
+post - insert new plant event
+
+/api/actionEvents/:id
+get - list all action events for plant
+
+/api/events/:id
+get - list all events for plant
+
+/api/users
+post - add new user
+
+/api/users/:id
+get - list user information
+put - update user information
+delete - delete user
