@@ -1,0 +1,14 @@
+/api/plants
+get - list all plant id and nickname
+post - adds plant
+
+/api/plants/:id
+get - list plant information
+delete - delete plant
+
+/api/plantEvents/:id
+get - list all plant events for plant
+post - insert new plant event
+
+
+/api/users
