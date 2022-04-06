@@ -85,7 +85,7 @@ int main(void) {
 
 				std::string data_str = std::string(time_str) + ",";
 				for(int i = 0; i < sensor_values.size(); i++) {
-					data_str += std::to_string(sensor_values[i]);
+					data_str += std::to_string(sensor_values[i] / (float)SAMPLES);
 					if(i < sensor_values.size()-1) data_str += ",";
 					else data_str += '\n';
 				}
