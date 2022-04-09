@@ -1,0 +1,4 @@
+RewriteEngine On    # Turn on the rewriting engine 
+RewriteRule ^api/users/([0-9a-zA-Z_-]*)$ api/users/users.php?userId=$1 [NC,L]
+RewriteRule ^api/plants/([0-9a-zA-Z_-]*)$ api/plants/plants.php?plantId=$1 [NC,L]
+RewriteRule ^api/events/([0-9a-zA-Z_-]*)$ api/events/events.php?eventId=$1 [NC,L]

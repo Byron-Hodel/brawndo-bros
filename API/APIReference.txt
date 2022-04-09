@@ -9,7 +9,7 @@ delete - delete plant
 
 /api/plantEvents/:id
 get - list all plant events for plant
-post - insert new plant event
+post - insert new plant event, receive actionEvent
 
 /api/actionEvents/:id
 get - list all action events for plant

@@ -1,0 +1,39 @@
+####################  USERS  ####################
+####  Get User  ####
+curl http://brawndotest.mattmoose.net/api/users/4
+
+####  Add User  ####
+curl -H "Content-Type: application/json" \
+-X POST \
+-d '{"email":"curl@curl.curl","password":"curly"}' \
+http://brawndotest.mattmoose.net/api/users/
+
+####  Edit User  ####
+curl -H "Content-Type: application/json" \
+-X PUT \
+-d '{"userId":4,"email":"put@put.put","password":"puty"}' \
+http://brawndotest.mattmoose.net/api/users/
+
+####  Delete User  ####
+curl -X DELETE http://brawndotest.mattmoose.net/api/users/4
+
+
+####################  PLANTS  ####################
+
+####  Get Plant  ####
+curl http://brawndotest.mattmoose.net/api/plants/4
+
+####  Add Plant  ####
+curl -H "Content-Type: application/json" \
+-X POST \
+-d '{"userId":1,"plantName":"Planty","plantSpecies":"Plant","soilMoistureThreshold":0,"soilMoistureDosage":100,"soilTempThreshold":0,"soilTempDosage":100,"ambientLightThreshold":0,"ambientLightDosage":100}' \
+http://brawndotest.mattmoose.net/api/plants/
+
+####  Edit Plant  ####
+curl -H "Content-Type: application/json" \
+-X PUT \
+-d '{"plantId":2,"plantName":"Plantette","plantSpecies":"Plantess","soilMoistureThreshold":1,"soilMoistureDosage":101,"soilTempThreshold":1,"soilTempDosage":101,"ambientLightThreshold":1,"ambientLightDosage":101}' \
+http://brawndotest.mattmoose.net/api/plants/
+
+####  Delete Plant  ####
+curl -X DELETE http://brawndotest.mattmoose.net/api/plants/4
