@@ -24,7 +24,7 @@ int main(void) {
 
 	const std::string file_path = "log.csv";
 
-	int port_fd = open("/dev/ttyACM0", O_RDWR | O_NOCTTY | O_NONBLOCK);
+	int port_fd = open("/dev/ttyUSB0", O_RDWR | O_NOCTTY | O_NONBLOCK);
 	if(port_fd == -1) {
 		std::cout << "Failed To Open Port\n";
 		return -1;
@@ -66,7 +66,7 @@ int main(void) {
 						else sensor_values[index] += value;
 						index++;
 					}
-					else {
+					else if(value_str != "") {
 						other_values.push_back(value_str);
 					}
 				}
