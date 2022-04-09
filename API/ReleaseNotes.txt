@@ -1,0 +1,20 @@
+********* API Release Notes *********
+*** v1.0.0 ***
+* Users *
+- get by user id returns user info
+- get without id returns list of users
+- post adds user, requires email and password
+- put edits user, requires user id
+- delete deletes user, requires user id
+* Plants *
+- get by plant id returns plant info
+- post adds plant, requires user id
+- put edits plant, requires plant id
+- delete deletes plant, requires plant id
+* Events * 
+- get by event id returns event info
+- post adds plant event, requires plant id
+
+* Notes *
+- sorry for the delay everybody, came across some major problems later than expected. This was a lot of work and I am new to this so please don't judge my terrible programming.
+

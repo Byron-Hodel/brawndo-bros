@@ -1,0 +1,5 @@
+********* DB Release Notes *********
+*** v1.0.0 ***
+- merged of Action and Plant Events
+- added auto increment and primary keys
+- other minor fixes
