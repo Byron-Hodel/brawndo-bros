@@ -1,4 +1,9 @@
 ********* API Release Notes *********
+*** v1.1.0 ***
+-get and delete request formats have been updated better reflect best practices
+-added plant endpoint for user
+-added event endpoint for plant
+
 *** v1.0.0 ***
 * Users *
 - get by user id returns user info

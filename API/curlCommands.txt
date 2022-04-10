@@ -1,6 +1,6 @@
 ####################  USERS  ####################
 ####  Get User  ####
-curl http://brawndotest.mattmoose.net/api/users/4
+curl http://brawndotest.mattmoose.net/api/users/userId/4
 
 ####  Add User  ####
 curl -H "Content-Type: application/json" \
@@ -15,15 +15,15 @@ curl -H "Content-Type: application/json" \
 http://brawndotest.mattmoose.net/api/users/
 
 ####  Delete User  ####
-curl -X DELETE http://brawndotest.mattmoose.net/api/users/4
+curl -X DELETE http://brawndotest.mattmoose.net/api/users/userid/4
 
 
 ####################  PLANTS  ####################
 
 ####  Get Plant  ####
-curl http://brawndotest.mattmoose.net/api/plants/plantId:4
+curl http://brawndotest.mattmoose.net/api/plants/plantId/4
 
-curl http://brawndotest.mattmoose.net/api/plants/userId:1
+curl http://brawndotest.mattmoose.net/api/plants/userId/1
 
 ####  Add Plant  ####
 curl -H "Content-Type: application/json" \
@@ -38,14 +38,14 @@ curl -H "Content-Type: application/json" \
 http://brawndotest.mattmoose.net/api/plants/
 
 ####  Delete Plant  ####
-curl -X DELETE http://brawndotest.mattmoose.net/api/plants/4
+curl -X DELETE http://brawndotest.mattmoose.net/api/plants/plantId/4
 
 ####################  EVENTS  ####################
 
 ####  Get Event  ####
-curl http://brawndotest.mattmoose.net/api/events/eventId:4
+curl http://brawndotest.mattmoose.net/api/events/eventId/4
 
-curl http://brawndotest.mattmoose.net/api/events/plantId:1
+curl http://brawndotest.mattmoose.net/api/events/plantId/1
 
 ####  Add Event  ####
 curl -H "Content-Type: application/json" \
