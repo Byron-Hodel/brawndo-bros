@@ -21,7 +21,9 @@ curl -X DELETE http://brawndotest.mattmoose.net/api/users/4
 ####################  PLANTS  ####################
 
 ####  Get Plant  ####
-curl http://brawndotest.mattmoose.net/api/plants/4
+curl http://brawndotest.mattmoose.net/api/plants/plantId:4
+
+curl http://brawndotest.mattmoose.net/api/plants/userId:1
 
 ####  Add Plant  ####
 curl -H "Content-Type: application/json" \
@@ -37,3 +39,17 @@ http://brawndotest.mattmoose.net/api/plants/
 
 ####  Delete Plant  ####
 curl -X DELETE http://brawndotest.mattmoose.net/api/plants/4
+
+####################  EVENTS  ####################
+
+####  Get Event  ####
+curl http://brawndotest.mattmoose.net/api/events/eventId:4
+
+curl http://brawndotest.mattmoose.net/api/events/plantId:1
+
+####  Add Event  ####
+curl -H "Content-Type: application/json" \
+-X POST \
+-d '{"plantId":1,"eventType":"data","eventSubtype":"Soil Moisture","eventValue":"100","eventTime":"01:47:23"}' \
+http://brawndotest.mattmoose.net/api/events/
+

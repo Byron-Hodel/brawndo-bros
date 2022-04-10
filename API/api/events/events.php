@@ -39,6 +39,23 @@ if($_SERVER['REQUEST_METHOD'] === 'GET') {
 			}
 			response(200,"Event Found", $eventInfo);
 		}
+	}
+	if(!empty($_GET['plantId'])) {
+		$plantId = $_GET['plantId'];	
+		
+		$sql = "SELECT * FROM Events WHERE plantId = (?);";
+		$args = [];
+		$args[] = $plantId;
+		$sqlResults = execute($sql, $args);
+	
+		if(empty($sqlResults)) {
+			response(200,"Event Not Found", NULL);
+		} else {
+			foreach ($sqlResults as $sqlResult) {
+				$eventList[] = $sqlResult;
+			}
+			response(200,"Event Found", $eventList);
+		}
 	} 
 }
 
@@ -60,12 +77,15 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
 	$args[] = $eventValue;
 	$args[] = $eventTime;
 	$sqlResults = execute($sql, $args);
-	$sql = "SELECT LAST_INSERT_ID();";
-	$sqlResults = execute($sql);
+	
+	$sql = "SELECT * FROM Plants WHERE plantId = (?)";
+	$args = [];
+	$args[] = $plantId;
+	$sqlResults = execute($sql, $args);
 	foreach ($sqlResults as $sqlResult) {
-		$eventId[] = $sqlResult["LAST_INSERT_ID()"];
+			$plantInfo[] = $sqlResult;
 	}
-	response(200, "Event Added", $eventId);
+	response(200, "Event Added", $plantInfo);
 }
 
 

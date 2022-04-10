@@ -38,11 +38,28 @@ if($_SERVER['REQUEST_METHOD'] === 'GET') {
 			response(200,"Plant Not Found", NULL);
 		} else {
 			foreach ($sqlResults as $sqlResult) {
-				$userInfo[] = $sqlResult;
+				$plantInfo[] = $sqlResult;
 			}
-			response(200,"Plant Found", $userInfo);
+			response(200,"Plant Found", $plantInfo);
 		}
 	} 
+	if(!empty($_GET['userId'])) {
+		$userId = $_GET['userId'];	
+		
+		$sql = "SELECT plantId, userId, plantName, plantSpecies, soilMoistureThreshold, soilMoistureDosage, soilMoistureCurrent, soilTempThreshold, soilTempDosage, soilTempCurrent, ambientLightThreshold, ambientLightDosage, ambientLightCurrent FROM Plants WHERE userId = (?);";
+		$args = [];
+		$args[] = $userId;
+		$sqlResults = execute($sql, $args);
+	
+		if(empty($sqlResults)) {
+			response(200,"Plant Not Found", NULL);
+		} else {
+			foreach ($sqlResults as $sqlResult) {
+				$plantList[] = $sqlResult;
+			}
+			response(200,"Plant Found", $plantList);
+		}
+	}
 }
 
 if($_SERVER['REQUEST_METHOD'] === 'POST') {
