@@ -82,7 +82,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 if($_SERVER['REQUEST_METHOD'] === 'PUT') {
 	$data = json_decode(file_get_contents('php://input'));
-	$userId = $data->{'userId'};
+	$userId = $_GET['userId'];	
 	$email = $data->{'email'};
 	$password = $data->{'password'};
 	if (!empty($userId)) {

@@ -62,7 +62,7 @@ if($_SERVER['REQUEST_METHOD'] === 'GET') {
 if($_SERVER['REQUEST_METHOD'] === 'POST') {
 	
 	$data = json_decode(file_get_contents('php://input'));
-	$plantId = $data->{'plantId'};
+	$plantId = $_GET['plantId'];
 	$eventType = $data->{'eventType'};
 	$eventSubtype = $data->{'eventSubtype'};
 	$eventValue = $data->{'eventValue'};

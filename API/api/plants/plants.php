@@ -65,7 +65,7 @@ if($_SERVER['REQUEST_METHOD'] === 'GET') {
 if($_SERVER['REQUEST_METHOD'] === 'POST') {
 	
 	$data = json_decode(file_get_contents('php://input'));
-	$userId = $data->{'userId'};
+	$userId = $_GET['userId'];
 	$plantName = $data->{'plantName'};
 	$plantSpecies = $data->{'plantSpecies'};
 	$soilMoistureThreshold = $data->{'soilMoistureThreshold'};
@@ -100,7 +100,8 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 if($_SERVER['REQUEST_METHOD'] === 'PUT') {
 	$data = json_decode(file_get_contents('php://input'));
-	$plantId = $data->{'plantId'};
+	$plantId = $_GET['plantId'];
+
 	$plantName = $data->{'plantName'};
 	$plantSpecies = $data->{'plantSpecies'};
 	$soilMoistureThreshold = $data->{'soilMoistureThreshold'};
