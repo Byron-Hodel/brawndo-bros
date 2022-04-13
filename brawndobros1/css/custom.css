@@ -1,0 +1,58 @@
+.navbar {
+  
+	padding: 0rem 7rem !important;
+}
+
+.nav-link{
+	font-family: 'Teko', sans-serif;
+	font-size: large;
+	color: #111 !important;
+	margin-right: 15px
+}
+
+h1,h2,h3,h4,h5,h6{
+	font-family: 'Teko', sans-serif;
+	color: #111 !important;
+}
+
+.section{
+	padding-top: 54px;
+	padding-bottom: 54px;
+}
+
+p{
+	font-family: 'Poppins', sans-serif !important;
+	color: #111 !important;
+}
+
+.text-red{
+	color:darkcyan
+}
+
+.section-title{
+	font-size: 32px;
+	font-weight: 600;
+	letter-spacing: 1px;
+}
+
+.bg-f2f2f2{
+background-color: #f2f2f2;
+}
+
+.readmore{
+	color:blue !important;
+}
+
+.bg-howitworks{
+	background-image: url('../images/slider/R\ \(1\).jpg');
+	background-size:cover;
+	background-position:center center;
+	background-repeat:no-repeat;
+	position:relative;
+	background-attachment: fixed;
+}
+
+.card-text{
+	font-size: 15px;
+
+}
