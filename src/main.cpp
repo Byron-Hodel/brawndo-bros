@@ -1,4 +1,5 @@
 #include <iostream>
+#include <iomanip>
 #include <sstream>
 #include <stdio.h>
 
@@ -12,7 +13,7 @@
 
 #include <fstream>
 
-#define SAMPLES 10
+#define SAMPLES 60
 #define BUFFER_SIZE 64
 
 void log_to_csv(const std::string str, const std::string file_path) {
@@ -22,33 +23,40 @@ void log_to_csv(const std::string str, const std::string file_path) {
 	output_stream.close();
 }
 
-void log_to_server(CURL* curl, const std::string str) {
-	curl_easy_setopt(curl, CURLOPT_URL, "http://domain_name_goes_here");
-	CURLcode result = curl_easy_perform(curl);
-	curl_easy_setopt(curl, CURLOPT_POST, 1);
-	if(result != CURLE_OK) {
-		std::cout << "Failed To Get Page.";
-	}
-}
-
-
-
-int main(void) {
+void log_to_server(const std::string str) {
 	CURL* curl = curl_easy_init();
-/*
-	curl_easy_setopt(curl, CURLOPT_URL, "http://brawndotest.mattmoose.net/api/users/userId/0");
+	curl_easy_setopt(curl, CURLOPT_URL, "http://brawndotest.mattmoose.net/api/events/plantId/1");
+	curl_easy_setopt(curl, CURLOPT_POSTFIELDS, str.c_str());
+
+	struct curl_slist *headers = NULL;
+	headers = curl_slist_append(headers, "Accept: application/json");
+	headers = curl_slist_append(headers, "Content-Type: application/json");
+	headers = curl_slist_append(headers, "charset: utf-8");
+	curl_easy_setopt(curl, CURLOPT_HTTPHEADER, headers);
+
 	CURLcode result = curl_easy_perform(curl);
 	if(result != CURLE_OK) {
 		std::cout << "Failed To Get Page.\n";
 	}
-*/
+	curl_easy_cleanup(curl);
+}
+
+
+
+int main(int argc, char** argv) {
+	if(argc == 1) {
+		std::cout << "Enter Port Name.\n";
+		return -1;
+	}
+
 	const std::string file_path = "log.csv";
 
-	int port_fd = open("/dev/ttyACM1", O_RDWR | O_NOCTTY);
+	int port_fd = open(argv[1], O_RDWR | O_NOCTTY);
 	if(port_fd == -1) {
 		std::cout << "Failed To Open Port\n";
 		return -1;
 	}
+	std::cout << "Opened Port\n";
 
 	struct termios attributes;
 	tcgetattr(port_fd, &attributes);
@@ -118,17 +126,26 @@ int main(void) {
 			if(current_samples == SAMPLES) {
 				time_t t = time(0);
 				struct tm* p = localtime(&t);
-				char time_str[1000];
-				strftime(time_str, 1000, "%d/%m/%y,%H:%M", p);
+				char time_str[100];
+				char json_time_str[100];
+				strftime(time_str, 100, "%d/%m/%y,%H:%M", p);
+				strftime(json_time_str, 100, "%H:%M:%S", p);
 
 				std::string data_str = std::string(time_str) + ",";
-
+				char json_fmt[] = "{\"eventType\":\"data\",\"eventSubtype\":\"%s\",\"eventValue\":\"%s\",\"eventTime\":\"%s\"}";
+				//'{"eventType":"data","eventSubtype":"Soil Moisture","eventValue":"100","eventTime":"01:47:23"}'
 				for(int i = 0; i < parameter_names.size(); i++) {
-					if(sensor_values[i] == -1) data_str += str_values[i];
-					else data_str += std::to_string(sensor_values[i] / (float)SAMPLES);
+					std::string str;
+					if(sensor_values[i] == -1) str = str_values[i];
+					else str = std::to_string(sensor_values[i] / (float)SAMPLES);
 					sensor_values[i] = 0;
+					data_str += str;
 					if(i < parameter_names.size()-1) data_str += ",";
 					else data_str += '\n';
+
+					char json_str[500];
+					sprintf(json_str, json_fmt, parameter_names[i].c_str(), str.c_str(), json_time_str);
+					log_to_server(json_str);
 				}
 				std::cout << data_str;
 				log_to_csv(data_str, file_path);
@@ -138,6 +155,5 @@ int main(void) {
 			line.clear();
 		}
 	}
-	curl_easy_cleanup(curl);
 	return 0;
 }
