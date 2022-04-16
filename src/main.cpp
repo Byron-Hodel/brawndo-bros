@@ -23,6 +23,10 @@ void log_to_csv(const std::string str, const std::string file_path) {
 	output_stream.close();
 }
 
+uint32_t write_data(void *buffer, size_t size, size_t nmemb, void *userp) {
+   return size * nmemb;
+}
+
 void log_to_server(const std::string str) {
 	CURL* curl = curl_easy_init();
 	curl_easy_setopt(curl, CURLOPT_URL, "http://brawndotest.mattmoose.net/api/events/plantId/1");
@@ -33,6 +37,7 @@ void log_to_server(const std::string str) {
 	headers = curl_slist_append(headers, "Content-Type: application/json");
 	headers = curl_slist_append(headers, "charset: utf-8");
 	curl_easy_setopt(curl, CURLOPT_HTTPHEADER, headers);
+	curl_easy_setopt(curl, CURLOPT_WRITEDATA, write_data);
 
 	CURLcode result = curl_easy_perform(curl);
 	if(result != CURLE_OK) {
