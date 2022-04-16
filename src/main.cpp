@@ -102,8 +102,8 @@ int main(void) {
 					ss >> value_str;
 					if(value_str == "") continue;
 					float value;
-					// check if it is a number (int or float)
-					if(std::stringstream(value_str) >> value) {
+					// check if it is a number (int or float), forces first read in value to be a string
+					if(std::stringstream(value_str) >> value && index != 0) {
 						sensor_values[index] += value;
 					}
 					else {
