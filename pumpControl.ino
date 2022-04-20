@@ -15,7 +15,7 @@ unsigned long pollRate = 1000;
 unsigned long pumpLastRun = 0;
 
 long OnTime = 1;           // milliseconds of on-time
-long OffTime = 10000;          // milliseconds of off-time *!* RESET TO 300000?
+long OffTime = 300000;          // milliseconds of off-time *!* RESET TO 300000?
 
 unsigned long moistureLimit = 450;
 
