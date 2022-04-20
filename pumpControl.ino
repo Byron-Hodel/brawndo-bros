@@ -8,13 +8,11 @@ int pumpState = LOW;             // pumpState used to set the pump
 int pumpPin = 2;
 
 unsigned long previousMillis = 0;       
-unsigned long lastQuench = 0;           // stores last time pump was set off
-unsigned long lastDrink = 0;            // stores last time pump was set on
 unsigned long previousPoll = 0;
 unsigned long pollRate = 1000;
 unsigned long pumpLastRun = 0;
 
-long OnTime = 1;           // milliseconds of on-time
+long OnTime = 10000;           // milliseconds of on-time
 long OffTime = 300000;          // milliseconds of off-time *!* RESET TO 300000?
 
 unsigned long moistureLimit = 450;
