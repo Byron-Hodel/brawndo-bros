@@ -152,6 +152,8 @@ void setup()
   Serial.begin(9600);
   pc.begin();
   pinMode(pumpPin, OUTPUT);
+     
+  Serial.println("MinsSinceLastPumpEvent,Moisture,SoilTempC");
 }//END setup()
 
 void loop() {
