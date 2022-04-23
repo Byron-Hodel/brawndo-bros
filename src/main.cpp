@@ -36,7 +36,7 @@ typedef struct {
 
 void log_to_server(const std::string str) {
 	CURL* curl = curl_easy_init();
-	curl_easy_setopt(curl, CURLOPT_URL, "http://brawndotest.mattmoose.net/api/events/plantId/1");
+	curl_easy_setopt(curl, CURLOPT_URL, "http://brawndotest.mattmoose.net/api/events/plantId/2");
 	curl_easy_setopt(curl, CURLOPT_POSTFIELDS, str.c_str());
 
 	struct curl_slist *headers = NULL;
@@ -82,12 +82,17 @@ int main(int argc, char** argv) {
 	sleep(1);
 	tcflush(port_fd, TCIOFLUSH); // flush input and output to get rid of unwanted data present in buffer
 
-	//std::vector<std::string> parameter_names;
-	//std::string* str_values;
-	//float* sensor_values;
+	{
+		std::ifstream istream(file_path);
+		if(!istream) {
+			istream.close();
+			log_to_csv("Date,Time,Last_Pump_Time,Soil_Moisture,Soil_Temp,Pump_State\n", file_path);
+		}
+	}
+	std::cout << "Date,Time,Last_Pump_Time,Soil_Moisture,Soil_Temp,Pump_State\n";
+
 	sensor_data_t avg = {0};
 	sensor_data_t prev = {-1};
-	bool pump_on = false;
 
 	int current_samples = 0;
 	std::string line;
@@ -96,74 +101,76 @@ int main(int argc, char** argv) {
 		read(port_fd, buffer, BUFFER_SIZE);
 		line += std::string(buffer);
 
-		{
-			std::ifstream istream(file_path);
-			if(istream) {
-				istream.close();
-				log_to_csv("Pump_State,Soil_Moisture,Soil_Temp,Last_Pump_Time", file_path);
-			}
-			std::cout << "Pump_State,Soil_Moisture,Soil_Temp,Last_Pump_Time";
-		}
-
-
 		if(line[line.size()-1] == '\n') {
 			sensor_data_t data;
 
-			sscanf(
+			int r = sscanf(
 				line.c_str(), "%d,%f,%f,%d\n",
 				&data.last_pump_time, &data.soil_moisture,
 				&data.soil_temperature, &data.pump_state
 			);
-			avg.pump_state = data.pump_state;
+			if(r != 4) std::cout << "Invalid Format";
+			if(data.pump_state == 1)
+				avg.pump_state = data.pump_state;
 			avg.last_pump_time = data.last_pump_time;
 			avg.soil_moisture += data.soil_moisture / SAMPLES;
-			avg.soil_temperature += data.soil_moisture / SAMPLES;
+			avg.soil_temperature += data.soil_temperature / SAMPLES;
+			avg.last_pump_time = data.last_pump_time;
 
+			line.clear();
 			current_samples++;
 
 			if(current_samples == SAMPLES) {
 				time_t t = time(0);
 				struct tm* p = localtime(&t);
 				char time_str[100];
-				char json_time_str[100];
 				strftime(time_str, 100, "%d/%m/%y,%H:%M", p);
-				strftime(json_time_str, 100, "%d/%m/%y %H:%M:%S", p);
 
 				current_samples = 0;
-				char str[1024];
+				char str[256];
 				sprintf(
 					str, "%s,%d,%.0f,%.0f,%d\n",
 					time_str, avg.pump_state, avg.soil_moisture,
 					avg.soil_temperature, avg.last_pump_time
 				);
 				log_to_csv(str, file_path);
-
-				if(prev.pump_state == -1) continue;
-
-				const char json_fmt[] = "{"
-					"\"eventType\":\"data\","
-					"\"eventSubtype\":\"%s\","
-					"\"eventValue\":\"%f\","
-					"\"eventTime\":\"%s\""
-					"}";
-
-				// send pump event to server when pump has changed state
-				if(data.pump_state != prev.pump_state) {
-					pump_on = true;
-					sprintf(str, json_fmt, "pumpState", (float)data.pump_state, json_time_str);
-					log_to_server(std::string(str));
-				}
-
-				if(data.soil_moisture != prev.soil_moisture) {
-					sprintf(str, json_fmt, "soilMoisture", avg.soil_moisture, json_time_str);
-					log_to_server(std::string(str));
-				}
-				if(data.soil_temperature != prev.soil_temperature) {
-					sprintf(str, json_fmt, "soilTemperature", avg.soil_temperature, json_time_str);
-					log_to_server(std::string(str));
-				}
-				prev = data;
+				printf(
+					"%s,%d,%.0f,%.0f,%d\n",
+					time_str, avg.last_pump_time, avg.soil_moisture,
+					avg.soil_temperature, avg.pump_state
+				);
+				avg = (sensor_data_t) {0};
 			}
+
+			if(prev.pump_state == -1) continue;
+
+			time_t t = time(0);
+				struct tm* p = localtime(&t);
+				char json_time_str[100];
+				strftime(json_time_str, 100, "%d/%m/%y %H:%M:%S", p);
+
+			char str[256];
+			const char json_fmt[] = "{"
+				"\"eventType\":\"data\","
+				"\"eventSubtype\":\"%s\","
+				"\"eventValue\":\"%f\","
+				"\"eventTime\":\"%s\""
+				"}";
+			// send pump event to server when pump has changed state
+			if(data.pump_state != prev.pump_state) {
+				sprintf(str, json_fmt, "pumpState", (float)data.pump_state, json_time_str);
+				log_to_server(std::string(str));
+			}
+
+			if((int)data.soil_moisture != (int)prev.soil_moisture) {
+				sprintf(str, json_fmt, "soilMoisture", data.soil_moisture, json_time_str);
+				log_to_server(std::string(str));
+			}
+			if((int)data.soil_temperature != (int)prev.soil_temperature) {
+				sprintf(str, json_fmt, "soilTemperature", data.soil_temperature, json_time_str);
+				log_to_server(std::string(str));
+			}
+			prev = data;
 		}
 	}
 	return 0;
