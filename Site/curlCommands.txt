@@ -1,12 +1,11 @@
 ####################  USERS  ####################
 ####  Get User  ####
-curl http://brawndotest.mattmoose.net/api/users/userId/4
+// NOT IN PRODUCTION curl -H "Authorization: 906FE305" http://brawndotest.mattmoose.net/api/users/4
+
+curl http://brawndotest.mattmoose.net/api/users/4
 
 ####  Add User  ####
-curl -H "Content-Type: application/json" \
--X POST \
--d '{"email":"curl@curl.curl","password":"curly"}' \
-http://brawndotest.mattmoose.net/api/users/
+curl -H "Content-Type: application/json" -X POST -d '{"email":"curl@curl.curl","password":"curly"}' http://brawndotest.mattmoose.net/api/users/
 
 ####  Edit User  ####
 curl -H "Content-Type: application/json" \
@@ -28,13 +27,13 @@ curl http://brawndotest.mattmoose.net/api/plants/userId/1
 ####  Add Plant  ####
 curl -H "Content-Type: application/json" \
 -X POST \
--d '{"plantName":"Planty","plantSpecies":"Plant","soilMoistureThreshold":0,"soilMoistureDosage":100,"soilTempThreshold":0,"soilTempDosage":100,"ambientLightThreshold":0,"ambientLightDosage":100}' \
+-d '{"plantName":"Planty","plantSpecies":"Plant","soilMoistureThreshold":0,"soilMoistureDosage":100,"soilTempThreshold":0,"soilTempDosage":100}' \
 http://brawndotest.mattmoose.net/api/plants/userId/1
 
 ####  Edit Plant  ####
 curl -H "Content-Type: application/json" \
 -X PUT \
--d '{"plantName":"Plantette","plantSpecies":"Plantess","soilMoistureThreshold":1,"soilMoistureDosage":101,"soilTempThreshold":1,"soilTempDosage":101,"ambientLightThreshold":1,"ambientLightDosage":101}' \
+-d '{"plantName":"Plantette","plantSpecies":"Plantess","soilMoistureThreshold":1,"soilMoistureDosage":101,"soilTempThreshold":1,"soilTempDosage":101}' \
 http://brawndotest.mattmoose.net/api/plants/plantId/2
 
 ####  Delete Plant  ####
