@@ -21,7 +21,7 @@ unsigned long pumpLastRun = 0;
 unsigned long eventStamp[5];      //holds time stamps for 5 events
 
 long OnTime = 10000;           // milliseconds of on-time
-long OffTime = 3000;          // milliseconds of off-time *!* RESET TO 300000
+long OffTime = 300000;          // milliseconds of off-time *!* RESET TO 300000
 
 unsigned long moistureLimit = 60;
 int moistPer = 0;
