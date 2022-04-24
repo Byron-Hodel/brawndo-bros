@@ -140,7 +140,7 @@ void logStatus(unsigned long currentMillis)
     outLine = pumpLastRun + comma + this->moistPer + comma + this->getTempC() + comma + pumpState;
     Serial.println(outLine);
     previousPoll = currentMillis;
-    countEvents(currentMillis);
+    //countEvents(currentMillis);
 }
 
 void countEvents(unsigned long currentMillis)
@@ -172,7 +172,7 @@ void countEvents(unsigned long currentMillis)
         eventStamp[4] = currentMillis;
 
 
-      if((eventStamp[4] - eventStamp[0]) < HOUR  && currentMillis > HOUR)
+      if((eventStamp[4] - eventStamp[0]) < HOUR)  /*&& currentMillis > HOUR*/
       {
         systemFault = true;
       }
@@ -272,7 +272,7 @@ void loop() {
     pc.display(lcd, 3);
   }
 
-/*!*/ 
+/*!* 
   while(pc.getSysFault() == true)
   {
     pc.display(lcd, 4);
