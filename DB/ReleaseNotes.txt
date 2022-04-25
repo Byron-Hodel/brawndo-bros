@@ -1,4 +1,7 @@
 ********* DB Release Notes *********
+*** v1.1.0 ***
+- Dropped Light Sensing
+
 *** v1.0.0 ***
 - merged of Action and Plant Events
 - added auto increment and primary keys

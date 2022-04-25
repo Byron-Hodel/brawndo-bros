@@ -1,6 +1,0 @@
-RewriteEngine On    # Turn on the rewriting engine 
-RewriteRule ^api/users/userId/([0-9a-zA-Z_-]*)$ api/users/users.php?userId=$1 [NC,L]
-RewriteRule ^api/plants/plantId/([0-9a-zA-Z_-]*)$ api/plants/plants.php?plantId=$1 [NC,L]
-RewriteRule ^api/plants/userId/([0-9a-zA-Z_-]*)$ api/plants/plants.php?userId=$1 [NC,L]
-RewriteRule ^api/events/eventId/([0-9a-zA-Z_-]*)$ api/events/events.php?eventId=$1 [NC,L]
-RewriteRule ^api/events/plantId/([0-9a-zA-Z_-]*)$ api/events/events.php?plantId=$1 [NC,L]

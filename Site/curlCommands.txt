@@ -52,3 +52,11 @@ curl -H "Content-Type: application/json" \
 -d '{"eventType":"data","eventSubtype":"Soil Moisture","eventValue":"100","eventTime":"01:47:23"}' \
 http://brawndotest.mattmoose.net/api/events/plantId/2
 
+curl -H "Content-Type: application/json" \
+-X POST \
+-d '{"eventType":"data","eventSubtype":"Moisture","eventValue":"9","eventTime":"01:47:23"}' \
+http://brawndotest.mattmoose.net/api/events/plantId/2
+
+curl -X POST 'http://brawndotest.mattmoose.net/api/images/plantId/2' \
+-F "image=@/path/of/image.png"
+

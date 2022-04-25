@@ -21,6 +21,9 @@ error_reporting(E_ALL);
 header("Content-Type:application/json");
 require_once "../../classes/dbconn.php";
 
+$httpHeaders = getallheaders();
+// $accessToken = $httpHeaders['Authorization'];
+
 
 $plants=[];
 $sqlResults="";
@@ -29,7 +32,8 @@ if($_SERVER['REQUEST_METHOD'] === 'GET') {
 	if(!empty($_GET['plantId'])) {
 		$plantId = $_GET['plantId'];	
 		
-		$sql = "SELECT plantId, userId, plantName, plantSpecies, soilMoistureThreshold, soilMoistureDosage, soilMoistureCurrent, soilTempThreshold, soilTempDosage, soilTempCurrent, ambientLightThreshold, ambientLightDosage, ambientLightCurrent FROM Plants WHERE plantId = (?);";
+		// $sql = "SELECT plantId, userId, plantName, plantSpecies, soilMoistureThreshold, soilMoistureDosage, soilMoistureCurrent, soilTempThreshold, soilTempDosage FROM Plants WHERE plantId = (?);";
+		$sql = "SELECT plantId, userId, plantImage, plantName, plantSpecies, soilMoistureThreshold, soilMoistureDosage, soilMoistureCurrent, soilTempThreshold, soilTempDosage FROM Plants WHERE plantId = (?);";
 		$args = [];
 		$args[] = $plantId;
 		$sqlResults = execute($sql, $args);
@@ -45,19 +49,28 @@ if($_SERVER['REQUEST_METHOD'] === 'GET') {
 	} 
 	if(!empty($_GET['userId'])) {
 		$userId = $_GET['userId'];	
-		
-		$sql = "SELECT plantId, userId, plantName, plantSpecies, soilMoistureThreshold, soilMoistureDosage, soilMoistureCurrent, soilTempThreshold, soilTempDosage, soilTempCurrent, ambientLightThreshold, ambientLightDosage, ambientLightCurrent FROM Plants WHERE userId = (?);";
+		// $sql = "SELECT userId FROM Users WHERE userId = (?) and accessToken = (?);";
+		$sql = "SELECT userId FROM Users WHERE userId = (?);";
 		$args = [];
 		$args[] = $userId;
+		// $args[] = $accessToken;
 		$sqlResults = execute($sql, $args);
-	
 		if(empty($sqlResults)) {
-			response(200,"Plant Not Found", NULL);
+			response(401,"Unauthorized Access", NULL);
 		} else {
-			foreach ($sqlResults as $sqlResult) {
-				$plantList[] = $sqlResult;
+			$sql = "SELECT plantId, userId, plantName, plantImage, plantSpecies, soilMoistureThreshold, soilMoistureDosage, soilMoistureCurrent, soilTempThreshold, soilTempDosage, soilTempCurrent FROM Plants WHERE userId = (?);";
+			$args = [];
+			$args[] = $userId;
+			$sqlResults = execute($sql, $args);
+		
+			if(empty($sqlResults)) {
+				response(200,"Plant Not Found", NULL);
+			} else {
+				foreach ($sqlResults as $sqlResult) {
+					$plantList[] = $sqlResult;
+				}
+				response(200,"Plant Found", $plantList);
 			}
-			response(200,"Plant Found", $plantList);
 		}
 	}
 }
@@ -72,10 +85,8 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
 	$soilMoistureDosage = $data->{'soilMoistureDosage'};
 	$soilTempThreshold = $data->{'soilTempThreshold'};
 	$soilTempDosage = $data->{'soilTempDosage'};
-	$ambientLightThreshold = $data->{'ambientLightThreshold'};
-	$ambientLightDosage = $data->{'ambientLightDosage'};
 	
-	$sql = "INSERT INTO Plants (userId, plantName, plantSpecies, soilMoistureThreshold, soilMoistureDosage, soilTempThreshold, soilTempDosage, ambientLightThreshold, ambientLightDosage) VALUES ((?), (?), (?), (?), (?), (?), (?), (?), (?));";
+	$sql = "INSERT INTO Plants (userId, plantName, plantSpecies, soilMoistureThreshold, soilMoistureDosage, soilTempThreshold, soilTempDosage) VALUES ((?), (?), (?), (?), (?), (?), (?));";
 	$args = [];
 	$args[] = $userId;
 	$args[] = $plantName;
@@ -84,8 +95,6 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
 	$args[] = $soilMoistureDosage;
 	$args[] = $soilTempThreshold;
 	$args[] = $soilTempDosage;
-	$args[] = $ambientLightThreshold;
-	$args[] = $ambientLightDosage;
 	$sqlResults = execute($sql, $args);
 	$sql = "SELECT plantId, plantName FROM Plants WHERE plantName = (?);";
 	$args = [];
@@ -108,8 +117,6 @@ if($_SERVER['REQUEST_METHOD'] === 'PUT') {
 	$soilMoistureDosage = $data->{'soilMoistureDosage'};
 	$soilTempThreshold = $data->{'soilTempThreshold'};
 	$soilTempDosage = $data->{'soilTempDosage'};
-	$ambientLightThreshold = $data->{'ambientLightThreshold'};
-	$ambientLightDosage = $data->{'ambientLightDosage'};
 	if (!empty($plantId)) {
 		if (!empty($plantName)) {
 			$sql = "UPDATE Plants SET plantName = (?) WHERE plantId =(?);";
@@ -158,22 +165,6 @@ if($_SERVER['REQUEST_METHOD'] === 'PUT') {
 			$args[] = $plantId;
 			$sqlResults = execute($sql, $args);
 			response(200, "Plant Soil Temp Dosage Updated", $plantId);
-		}
-		if (!empty($ambientLightThreshold)) {
-			$sql = "UPDATE Plants SET ambientLightThreshold = (?) WHERE plantId =(?);";
-			$args = [];
-			$args[] = $ambientLightThreshold;
-			$args[] = $plantId;
-			$sqlResults = execute($sql, $args);
-			response(200, "Plant Ambient Light Threshold Updated", $plantId);
-		}
-		if (!empty($ambientLightDosage)) {
-			$sql = "UPDATE Plants SET ambientLightDosage = (?) WHERE plantId =(?);";
-			$args = [];
-			$args[] = $ambientLightDosage;
-			$args[] = $plantId;
-			$sqlResults = execute($sql, $args);
-			response(200, "Plant Ambient Light Dosage Updated", $plantId);
 		}
 	}
 }

@@ -9,6 +9,7 @@ create table Users (
 	userId int NOT NULL AUTO_INCREMENT,
 	email varchar(255),
 	password varchar(255),
+	accessToken varchar(255),
 	lastLogin varchar(255),
 	PRIMARY KEY (userId)
 );
@@ -25,9 +26,6 @@ create table Plants (
 	soilTempThreshold varchar(255),
 	soilTempCurrent varchar(255),
 	soilTempDosage varchar(255),
-	ambientLightThreshold varchar(255),
-	ambientLightCurrent varchar(255),
-	ambientLightDosage varchar(255),
 	PRIMARY KEY (plantId)
 );
 

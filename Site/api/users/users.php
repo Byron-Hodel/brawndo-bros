@@ -19,6 +19,9 @@ error_reporting(E_ALL);
 header("Content-Type:application/json");
 require_once "../../classes/dbconn.php";
 
+$httpHeaders = getallheaders();
+// $accessToken = $httpHeaders['Authorization'];
+
 
 $users=[];
 $sqlResults="";
@@ -27,18 +30,17 @@ if($_SERVER['REQUEST_METHOD'] === 'GET') {
 	if(!empty($_GET['userId'])) {
 		$userId = $_GET['userId'];	
 		
+		//$sql = "SELECT userId, email, lastLogin FROM Users WHERE userId = (?) and accessToken = (?);";
 		$sql = "SELECT userId, email, lastLogin FROM Users WHERE userId = (?);";
 		$args = [];
 		$args[] = $userId;
+		// $args[] = $accessToken;
 		$sqlResults = execute($sql, $args);
-	
-	
+		
 		if(empty($sqlResults)) {
-			response(200,"User Not Found", NULL);
+			response(401,"Unautorized Access", NULL);
 		} else {
-			foreach ($sqlResults as $sqlResult) {
-				$userInfo[] = $sqlResult;
-			}
+			$userInfo = $sqlResults[0];
 			response(200,"User Found", $userInfo);
 		}
 	} else {

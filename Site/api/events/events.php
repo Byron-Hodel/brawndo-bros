@@ -43,7 +43,7 @@ if($_SERVER['REQUEST_METHOD'] === 'GET') {
 	if(!empty($_GET['plantId'])) {
 		$plantId = $_GET['plantId'];	
 		
-		$sql = "SELECT * FROM Events WHERE plantId = (?);";
+		$sql = "SELECT * FROM Events WHERE plantId = (?) ORDER BY eventId DESC LIMIT 100;";
 		$args = [];
 		$args[] = $plantId;
 		$sqlResults = execute($sql, $args);
@@ -77,6 +77,26 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
 	$args[] = $eventValue;
 	$args[] = $eventTime;
 	$sqlResults = execute($sql, $args);
+
+	
+	switch($eventSubtype) {
+		case "soilMoisture": {
+				$sql = "UPDATE Plants SET soilMoistureCurrent = (?) WHERE plantId =(?);";
+				$args = [];
+				$args[] = $eventValue;
+				$args[] = $plantId;
+				$sqlResults = execute($sql, $args);
+			}
+			break;
+		case "soilTemperature": {
+				$sql = "UPDATE Plants SET soilTempCurrent = (?) WHERE plantId =(?);";
+				$args = [];
+				$args[] = $eventValue;
+				$args[] = $plantId;
+				$sqlResults = execute($sql, $args);
+			}
+			break;
+	}
 	
 	$sql = "SELECT * FROM Plants WHERE plantId = (?)";
 	$args = [];
@@ -85,6 +105,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
 	foreach ($sqlResults as $sqlResult) {
 			$plantInfo[] = $sqlResult;
 	}
+	
 	response(200, "Event Added", $plantInfo);
 }
 
