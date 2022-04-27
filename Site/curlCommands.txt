@@ -1,3 +1,9 @@
+####################  LOGIN  ####################
+curl -H "Content-Type: application/json" \                  
+-X POST \
+-d '{"email":"put@put.put","password":"puty"}' \
+http://brawndotest.mattmoose.net/api/login/login.php
+
 ####################  USERS  ####################
 ####  Get User  ####
 // NOT IN PRODUCTION curl -H "Authorization: 906FE305" http://brawndotest.mattmoose.net/api/users/4
