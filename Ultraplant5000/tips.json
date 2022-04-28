@@ -1,0 +1,43 @@
+[
+    {
+        "title": "Soil Moisture",
+        "item": [
+            {
+                "title": "title",
+                "Threshold": "Lowest amount of moisture before action is run",
+                "Current": "Latest moisture level received",
+                "Action": "email alert, pump water",
+                "Dosage": "prescribed amount of water"
+            }
+        ]
+    },
+    {
+        "title": "Soil Temp",
+        "item": [
+            {
+                "title": "title",
+                "Threshold": "Lowest  temp before action is run",
+                "Current": "Latest temp received",
+                "Action": "Email alert, turn on heater",
+                "Dosage": "prescribed time to heat"
+            }
+        ]
+       
+    },
+    {
+        "title": "Plant Light",
+        "item": [
+            {
+                "title": "title",
+                "Threshold": "Longest amount of time without light before action is taken",
+                "Current": "current amount of time without light",
+                "Action": "Email alert, turn on right",
+                "Dosage": "prescribed time of light"
+            }
+        ]
+    }
+]
+
+
+
+

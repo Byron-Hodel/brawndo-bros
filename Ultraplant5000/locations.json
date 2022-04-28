@@ -1,0 +1,35 @@
+
+    [
+        {
+            "id": 1,
+            "name": "plant",
+            "volume": "Soil Moisture",
+            "description": "Is the amount of water used, including the water vapor, in an unsaturated Soil.” Sometimes it's also called the soil water because it represents the water in land surfaces that, but not on rivers or lakes or groundwater, but resides instead. In the proes of the soil, and the levelof the soil moisture is determined by a host of factors beyoung weather conditions. As well as soil type and dynamics.",
+            "more": "The amount of soil moisture can have significantly different implications depending on location, season, soil type, and depth. techniques for monitoring soil moisture are undergoing rapid growth and innovation with the advent of new in situ and proximal sensors, new satellite and other remote sensing technologies, and enhanced modeling capabilities. This is leading to an increasing number of soil moisture data products in development.",
+            "Open Port": "Date,Time, Minus Since LastPumpEvent, Moisture, SoilTempC",
+            "Result1": "16/04/22, 15:24,1, 10113.933350, 20.5511501, 16/04/22, 15:25,2, 1013.933350, 20.5711567",
+            "Result2": "16/04/22, 15:25,2, 1013.883362, 20.681667",
+                        
+            "pictures": ["Soil Moisture"],
+            "advisory": " The sensor moisture level below the trigger threshold? is the pump currently off? and has it been at least 5 minutes since the last pump event (or power on)?."
+        },
+        {
+            "id": 1,
+            "name": "plant",
+            "volume": "Soil Tempreture",
+            "description": "Soil temperature “ is what derives the growth of the soil contained within the seed,  and the natural process, such as leaves and food scrops, alot of other processes. Knowing how to check soil temperature is going to help the home garden know what to do inorder to sow seeds. It’s important to know the soil temperature will help define when transplanting, and how to begin. Soil temperature plays a great role when it comes to planting and will help you grow a better and more beautiful garden.",
+            "more": "The Soil temperature grows vary monthly, seasonally, and daily, and the main main source is the earth heat with solar radiation. Farmers has to manage the soil temperature between wetland, dry lands and their heat all inorder to find the best capabilities that helps agriculture to schedule the field events to know the best time to harvest.",
+            "pictures": ["Soil Tempreture"],
+            "advisory": "The growing degree day system is based on air temperature."
+        },
+        {
+            "id": 1,
+            "name": "plant",
+            "volume": "Plant Light",
+            "description": "As we call knw plants need sunlight, Plant light also called growth stimulates the light wonder coming from the sun and it is used to grow mostly indoor plants. The lights emit a higher  percentage of heat than specifically designed to help plants to grow. The most important thing is to make sure how the lights are because the higher the lights are the more they can burn the leaves. The instant light helps the photosynthesis, grows of the plants. As a new person, it’s highly recommended to do more and everything about gardening and growing.",
+            "more": "However, when it comes to being efficient thgr reguler lights and the plant lights, then the regular lights are the one to take. Because the regular lights give the needed wavelength without overheating, and they consume a lot of energy. When buying the best light  to grow plants then choking lights that work better for plants will do.",
+            "pictures": ["Plant Light"],
+            "advisory":"The light energy of the Sun provides the much-needed nutrients to plants that help in plant growth."
+        },
+    ]
+
